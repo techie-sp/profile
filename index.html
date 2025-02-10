@@ -181,6 +181,30 @@
                 padding: 10px 15px;
             }
         }
+.touch-word {
+            position: absolute;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff66b2;
+            animation: scaleDisappear 1.5s ease-out forwards;
+        }
+
+        @keyframes scaleDisappear {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
