@@ -1,8 +1,437 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Anniversary Animation</title>
+    <style>
+        body {
+            background-color: #000;
+            color: white;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .letters {
+            font-size: 120px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: fadeInScale 2s forwards ease-in-out;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .glow {
+            text-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+            }
+
+            to {
+                text-shadow: 0 0 30px rgba(255, 204, 0, 1);
+            }
+        }
+
+        .heart {
+            width: 60px;
+            height: 60px;
+            background-color: red;
+            position: relative;
+            margin: 0 20px;
+            transform: rotate(-45deg);
+            animation: heartbeat 1.5s infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            width: 60px;
+            height: 60px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart::before {
+            top: -30px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 30px;
+            top: 0;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1) rotate(-45deg);
+            }
+
+            50% {
+                transform: scale(1.2) rotate(-45deg);
+            }
+        }
+
+        .text {
+            font-size: 36px;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 2s 2s forwards, pulse 2s infinite alternate 3s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+                text-shadow: 0 0 10px pink;
+            }
+
+            to {
+                transform: scale(1.1);
+                text-shadow: 0 0 20px white;
+            }
+        }
+
+        .falling-hearts {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .falling-hearts span {
+            position: absolute;
+            top: -10px;
+            background-color: red;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        .touch-word {
+            position: absolute;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff66b2;
+            animation: scaleDisappear 1.5s ease-out forwards;
+        }
+
+        @keyframes scaleDisappear {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* 3D Ring Container */
+        .ring-container {
+            perspective: 1000px;
+            width: 300px;
+            height: 300px;
+            position: relative;
+        }
+
+        /* The rotating ring */
+        .ring {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            animation: rotateRing 5s linear infinite;
+        }
+
+        @keyframes rotateRing {
+            from {
+                transform: rotateY(0deg) rotateX(20deg);
+            }
+
+            to {
+                transform: rotateY(360deg) rotateX(20deg);
+            }
+        }
+
+        /* Letters positioned in a circle */
+        .letter {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            font-size: 36px;
+            font-weight: bold;
+            color: gold;
+            text-shadow: 0 0 20px gold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+        }
+
+        /* Position letters around the ring */
+        .letter:nth-child(1) {
+            transform: rotateY(0deg) translateZ(130px);
+        }
+
+        .letter:nth-child(2) {
+            transform: rotateY(60deg) translateZ(130px);
+        }
+
+        .letter:nth-child(3) {
+            transform: rotateY(120deg) translateZ(130px);
+        }
+
+        .letter:nth-child(4) {
+            transform: rotateY(180deg) translateZ(130px);
+        }
+
+        .letter:nth-child(5) {
+            transform: rotateY(240deg) translateZ(130px);
+        }
+
+        .letter:nth-child(6) {
+            transform: rotateY(300deg) translateZ(130px);
+        }
+
+        .text {
+            font-size: 36px;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 2s 2s forwards, pulse 2s infinite alternate 3s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+                text-shadow: 0 0 10px pink;
+            }
+
+            to {
+                transform: scale(1.1);
+                text-shadow: 0 0 20px white;
+            }
+        }
+    </style>
+</head>
+
 <body>
 
-<h1>Working in progress</h1>
+    <div class="container">
+        <div class="ring-container">
+            <div class="ring">
+                <div class="letter">S</div>
+                <div class="letter">❤️</div>
+                <div class="letter">P</div>
+                <div class="letter">💍</div>
+                <div class="letter">💕</div>
+                <div class="letter">💖</div>
+            </div>
+        </div>
+        <audio id="bgMusic" autoplay loop muted>
+            <source src="./master.mp3" type="audio/mp3">
+        </audio>
+
+        <!-- <div class="letters">
+            <span class="glow" style="color: #ffcc00;">S</span>
+            <div class="heart"></div>
+            <span class="glow" style="color: #ff66b2;">P</span>
+        </div> -->
+        <div class="text">💖 <span id="anniversaryText">Happy 7th Year Love Anniversary!</span> 💖</div>
+    </div>
+
+    <div class="falling-hearts"></div>
+
+    <script>
+        // Unmute when user clicks/touches anywhere
+        document.addEventListener("click", function () {
+            const audio = document.getElementById("bgMusic");
+            audio.muted = false;
+            audio.play();
+        }, { once: true });
+        function createHeart() {
+            const heart = document.createElement("span");
+            heart.classList.add("falling-heart");
+            heart.innerHTML = "❤️";
+
+            // Choose a random side (0 = top, 1 = bottom, 2 = left, 3 = right)
+            const side = Math.floor(Math.random() * 4);
+
+            if (side === 0) {  // From Top
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.top = "-10px";
+                heart.style.animation = "fallFromTop linear";
+            }
+            else if (side === 1) {  // From Bottom
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.top = "100vh";
+                heart.style.animation = "fallFromBottom linear";
+            }
+            else if (side === 2) {  // From Left
+                heart.style.left = "-10px";
+                heart.style.top = Math.random() * 100 + "vh";
+                heart.style.animation = "fallFromLeft linear";
+            }
+            else {  // From Right
+                heart.style.left = "100vw";
+                heart.style.top = Math.random() * 100 + "vh";
+                heart.style.animation = "fallFromRight linear";
+            }
+
+            // Random speed, size, and opacity
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+            heart.style.fontSize = Math.random() * 20 + 10 + "px";
+            heart.style.opacity = Math.random();
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        // Generate hearts every 300ms
+        setInterval(createHeart, 300);
+
+        // CSS for smooth animations
+        const style = document.createElement("style");
+        style.innerHTML = `
+    .falling-heart {
+        position: absolute;
+        z-index: 9999;
+    }
+
+    @keyframes fallFromTop {
+        to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+    @keyframes fallFromBottom {
+        to { transform: translateY(-100vh) rotate(-360deg); opacity: 0; }
+    }
+    @keyframes fallFromLeft {
+        to { transform: translateX(100vw) rotate(360deg); opacity: 0; }
+    }
+    @keyframes fallFromRight {
+        to { transform: translateX(-100vw) rotate(-360deg); opacity: 0; }
+    }
+`;
+        document.head.appendChild(style);
+
+
+        let words = [
+            "Love", "Chellam", "Dear", "Love you lots!", "Sweetheart", "Happiness Forever",
+            "My Love", "Always Yours", "You & Me Forever", "My Heartbeat", "Soulmate",
+            "My Everything", "Endless Love", "Forever & Always", "You Complete Me",
+            "Dream Come True", "Precious One", "My Angel", "My Queen",
+            "Moon & Stars", "Eternal Love", "Unbreakable Bond", "You’re My Sunshine",
+            "My Baby", "Love of My Life", "Madly in Love", "Hold Me Close",
+            "Together Forever", "Heart & Soul", "Love Beyond Words", "More Than Words",
+            "Adore You", "Forever Mine", "Unstoppable Love", "The One for Me", "My Precious",
+            "Only You", "Warm Hugs", "Sweetest Love", "My World", "Can’t Live Without You",
+            "You Make Me Smile", "My Happiness", "My Forever", "True Love", "Unconditional Love",
+            "Endless Affection", "You Make My Heart Race", "You're My Miracle", "Loving You Always",
+            "Always in My Heart", "My Safe Place", "You Are Magic", "The Reason I Breathe",
+            "Heaven Sent", "Love You to the Moon & Back", "In Your Arms Forever", "Heartbeats for You",
+            "Everlasting Love", "Your Love is My Strength", "Butterflies in My Stomach",
+            "You’re My Fairytale", "Every Moment With You", "The Best Part of My Life",
+            "You Light Up My Life", "My Home is You", "Serendipity", "Beyond the Stars",
+            "Melting in Your Love", "Choco Muffin", "Honey Bun", "Cutie Pie", "Cuddle Monster",
+            "You Stole My Heart", "You’re My Destiny", "Magic in Your Eyes", "Eternal Flame",
+            "Meant to Be", "You’re My Paradise", "My Cup of Tea", "You’re My Dream",
+            "Forever Enchanted", "Pure Bliss", "My Lucky Charm", "You Are My Forever",
+            "Heartstrings Attached", "You’re My Sunshine on a Rainy Day", "The Love of a Lifetime",
+            "You are My Universe", "Smitten by You", "Warm Embrace", "Melted in Love",
+            "Stuck on You", "Fairy Tale Love", "Blushing Because of You", "Can’t Take My Eyes Off You",
+            "Cherished Moments", "Our Love is Timeless", "Sweeter Than Sugar", "Hand in Hand Forever"
+        ];
+        let lastWordIndex = -1;
+
+        document.body.addEventListener("click", function (event) {
+            let availableWords = words.filter((_, index) => index !== lastWordIndex);
+            let randomIndex = Math.floor(Math.random() * availableWords.length);
+            let word = availableWords[randomIndex];
+            lastWordIndex = words.indexOf(word);
+
+            let wordElement = document.createElement("div");
+            wordElement.classList.add("touch-word");
+            wordElement.innerText = word;
+            wordElement.style.left = event.clientX + "px";
+            wordElement.style.top = event.clientY + "px";
+            wordElement.style.fontSize = Math.random() * 10 + 20 + "px";
+            wordElement.style.color = ["#ff66b2", "#ffcc00", "#ff3366", "#ff6699"][Math.floor(Math.random() * 4)];
+            document.body.appendChild(wordElement);
+
+            setTimeout(() => {
+                wordElement.remove();
+            }, 1500);
+        });
+    </script>
 
 </body>
+
 </html>
