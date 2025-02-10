@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Anniversary Animation</title>
+    <title>Happy Anniversary SP</title>
     <style>
         body {
             background-color: #000;
@@ -309,11 +309,22 @@
     <div class="falling-hearts"></div>
 
     <script>
-        // Unmute when user clicks/touches anywhere
         document.addEventListener("click", function () {
             const audio = document.getElementById("bgMusic");
             audio.muted = false;
             audio.play();
+
+            // Check if the browser supports Media Session API
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: "Master Song",
+                    artist: "Your Artist",
+                    album: "Your Album",
+                    artwork: [
+                        { src: "./img.jpg", sizes: "512x512", type: "image/jpg" }
+                    ]
+                });
+            }
         }, { once: true });
         function createHeart() {
             const heart = document.createElement("span");
