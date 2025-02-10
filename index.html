@@ -12,6 +12,8 @@
             text-align: center;
             font-family: 'Arial', sans-serif;
             overflow: hidden;
+            margin: 0;
+            padding: 0;
         }
 
         .container {
@@ -21,92 +23,78 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            text-align: center;
+            padding: 10px;
         }
 
-        .letters {
-            font-size: 120px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            opacity: 0;
-            transform: scale(0.5);
-            animation: fadeInScale 2s forwards ease-in-out;
+        .ring-container {
+            perspective: 800px;
+            width: 200px;
+            height: 200px;
+            position: relative;
         }
 
-        @keyframes fadeInScale {
-            0% {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
+        .ring {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            animation: rotateRing 5s linear infinite;
         }
 
-        .glow {
-            text-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
-            animation: glow 1.5s infinite alternate;
-        }
-
-        @keyframes glow {
+        @keyframes rotateRing {
             from {
-                text-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+                transform: rotateY(0deg) rotateX(20deg);
             }
 
             to {
-                text-shadow: 0 0 30px rgba(255, 204, 0, 1);
+                transform: rotateY(360deg) rotateX(20deg);
             }
         }
 
-        .heart {
-            width: 60px;
-            height: 60px;
-            background-color: red;
-            position: relative;
-            margin: 0 20px;
-            transform: rotate(-45deg);
-            animation: heartbeat 1.5s infinite;
-        }
-
-        .heart::before,
-        .heart::after {
-            content: "";
-            width: 60px;
-            height: 60px;
-            background-color: red;
-            border-radius: 50%;
+        .letter {
             position: absolute;
+            width: 40px;
+            height: 40px;
+            font-size: 24px;
+            font-weight: bold;
+            color: gold;
+            text-shadow: 0 0 10px gold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .heart::before {
-            top: -30px;
-            left: 0;
+        .letter:nth-child(1) {
+            transform: rotateY(0deg) translateZ(90px);
         }
 
-        .heart::after {
-            left: 30px;
-            top: 0;
+        .letter:nth-child(2) {
+            transform: rotateY(60deg) translateZ(90px);
         }
 
-        @keyframes heartbeat {
+        .letter:nth-child(3) {
+            transform: rotateY(120deg) translateZ(90px);
+        }
 
-            0%,
-            100% {
-                transform: scale(1) rotate(-45deg);
-            }
+        .letter:nth-child(4) {
+            transform: rotateY(180deg) translateZ(90px);
+        }
 
-            50% {
-                transform: scale(1.2) rotate(-45deg);
-            }
+        .letter:nth-child(5) {
+            transform: rotateY(240deg) translateZ(90px);
+        }
+
+        .letter:nth-child(6) {
+            transform: rotateY(300deg) translateZ(90px);
         }
 
         .text {
-            font-size: 36px;
+            font-size: 24px;
             margin-top: 20px;
+            padding: 10px;
             opacity: 0;
-            animation: fadeIn 2s 2s forwards, pulse 2s infinite alternate 3s;
+            animation: fadeIn 2s 1s forwards, pulse 2s infinite alternate 3s;
         }
 
         @keyframes fadeIn {
@@ -141,13 +129,11 @@
             pointer-events: none;
         }
 
-        .falling-hearts span {
+        .falling-heart {
             position: absolute;
-            top: -10px;
-            background-color: red;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
+            font-size: 14px;
+            color: red;
+            opacity: 0.7;
             animation: fall linear infinite;
         }
 
@@ -158,124 +144,41 @@
             }
         }
 
-        .touch-word {
-            position: absolute;
-            font-size: 20px;
-            font-weight: bold;
-            color: #ff66b2;
-            animation: scaleDisappear 1.5s ease-out forwards;
+        .play-button {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 20px;
+            font-size: 16px;
+            background: #ff66b2;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(255, 102, 178, 0.4);
+            display: none;
         }
 
-        @keyframes scaleDisappear {
-            0% {
-                transform: scale(1);
-                opacity: 1;
+        @media screen and (max-width: 768px) {
+            .ring-container {
+                width: 150px;
+                height: 150px;
             }
 
-            50% {
-                transform: scale(1.5);
-                opacity: 1;
+            .letter {
+                width: 30px;
+                height: 30px;
+                font-size: 18px;
             }
 
-            100% {
-                transform: scale(2);
-                opacity: 0;
-            }
-        }
-
-        /* 3D Ring Container */
-        .ring-container {
-            perspective: 1000px;
-            width: 300px;
-            height: 300px;
-            position: relative;
-        }
-
-        /* The rotating ring */
-        .ring {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            transform-style: preserve-3d;
-            animation: rotateRing 5s linear infinite;
-        }
-
-        @keyframes rotateRing {
-            from {
-                transform: rotateY(0deg) rotateX(20deg);
+            .text {
+                font-size: 20px;
             }
 
-            to {
-                transform: rotateY(360deg) rotateX(20deg);
-            }
-        }
-
-        /* Letters positioned in a circle */
-        .letter {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            font-size: 36px;
-            font-weight: bold;
-            color: gold;
-            text-shadow: 0 0 20px gold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform-style: preserve-3d;
-        }
-
-        /* Position letters around the ring */
-        .letter:nth-child(1) {
-            transform: rotateY(0deg) translateZ(130px);
-        }
-
-        .letter:nth-child(2) {
-            transform: rotateY(60deg) translateZ(130px);
-        }
-
-        .letter:nth-child(3) {
-            transform: rotateY(120deg) translateZ(130px);
-        }
-
-        .letter:nth-child(4) {
-            transform: rotateY(180deg) translateZ(130px);
-        }
-
-        .letter:nth-child(5) {
-            transform: rotateY(240deg) translateZ(130px);
-        }
-
-        .letter:nth-child(6) {
-            transform: rotateY(300deg) translateZ(130px);
-        }
-
-        .text {
-            font-size: 36px;
-            margin-top: 20px;
-            opacity: 0;
-            animation: fadeIn 2s 2s forwards, pulse 2s infinite alternate 3s;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes pulse {
-            from {
-                transform: scale(1);
-                text-shadow: 0 0 10px pink;
-            }
-
-            to {
-                transform: scale(1.1);
-                text-shadow: 0 0 20px white;
+            .play-button {
+                font-size: 14px;
+                padding: 10px 15px;
             }
         }
     </style>
